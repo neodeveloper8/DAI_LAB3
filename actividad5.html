@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Casa de Cambio</title>
+</head>
+<body>
+    <h1>Casa de Cambio</h1>
+    <form id="cambioForm">
+        <label for="monedaDesde">Selecciona la moneda a cambiar:</label>
+        <select id="monedaDesde">
+            <option value="dolar">Dólar</option>
+            <option value="soles">Soles</option>
+            <option value="euros">Euros</option>
+        </select><br><br>
+
+        <label for="monedaHacia">Selecciona la moneda a recibir:</label>
+        <select id="monedaHacia">
+            <option value="dolar">Dólar</option>
+            <option value="soles">Soles</option>
+            <option value="euros">Euros</option>
+        </select><br><br>
+
+        <label for="cantidad">Ingrese el monto:</label>
+        <input type="number" id="cantidad" placeholder="Ingrese la cantidad"><br><br>
+
+        <button type="button" onclick="calcularCambio()">Calcular Cambio</button>
+    </form>
+
+    <script>
+        function calcularCambio() {
+            // Obtener los valores seleccionados
+            var monedaDesde = document.getElementById("monedaDesde").value;
+            var monedaHacia = document.getElementById("monedaHacia").value;
+            var cantidad = parseFloat(document.getElementById("cantidad").value);
+
+            // Definir las tasas de cambio
+            var tasasCambio = {
+                "soles-dolar": 1/3.65,
+                "dolar-soles": 3.65,
+                "dolar-euros": 1.06,
+                "euros-dolar": 0.94,
+                "soles-euros":1/3.95,
+                "euros-soles":3.95,
+            };
+
+            // Calcular el total a recibir utilizando las tasas de cambio
+            var tasaCambioKey = monedaDesde + "-" + monedaHacia;
+            if (tasasCambio.hasOwnProperty(tasaCambioKey)) {
+                var tasa = tasasCambio[tasaCambioKey];
+                var total = cantidad * tasa;
+
+                // Mostrar una alerta con el total a recibir
+                alert("Total a recibir: " + total.toFixed(2) + " " + monedaHacia);
+            } else {
+                alert("No se encontró una tasa de cambio válida para la conversión seleccionada.");
+            }
+        }
+    </script>
+</body>
+</html>
